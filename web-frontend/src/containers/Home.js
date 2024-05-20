@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import backgroundImage from '../assets/BACKGROUND.jpg';
 import axios from 'axios';
 import '../style/style.css';
+import profile from '../assets/profile.png'
 
 const API_KEY = 'd0b69496c18e463f888a273cb521ea9f';
 
@@ -67,6 +68,11 @@ function Home() {
                 <h1 className="text-center mt-3" style={{ color: 'white', fontSize: '18px' }}>
                     <span className="bold-text" style={{ color: 'white', fontSize: '45px' }}>FusionTech</span> news and media
                 </h1>
+
+                <a href="/profile">
+                    <img src={profile} alt="FusionTech Logo" style={{ width: '70px', height: '70px', marginRight: '20px' }} />
+                </a>
+
 
                 {/* News Form */}
                 <form style={{ display: 'grid', gridTemplateColumns: '1fr auto', columnGap: '20px' }}>

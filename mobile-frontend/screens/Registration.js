@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform, ImageBackground } from "react-native"; 
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform, ImageBackground, Alert } from "react-native"; 
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/core";
+import { supabase } from "../client";
 
 export default function Registration() {
-  const [data, onChangeData] = useState(
-    {
-        "name": "",
-        "email": "",
-        "password": "",
-        "re_password": ""
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      const { user, error } = await supabase.auth.signUp({ email, password }); // Register user with email and password
+      if (error) {
+        Alert.alert("Registration Error", error.message);
+      } else {
+        // Registration successful, update user profile with full name
+        await supabase.auth.update({ data: { full_name: fullName } });
+        Alert.alert("Registration Successful", "You have been registered successfully!");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error.message);
     }
-  )
-
-  const navigation = useNavigation();
-
-
-  const handleSignIn = () => {
-    navigation.navigate('Home');
   };
-  
-
-  
 
   return (
     <ImageBackground source={require('../assets/background.jpg')}
@@ -42,55 +43,26 @@ export default function Registration() {
               </Text>
               <CustomInput
                 placeholder="Full name"
-                value={data.name}
-                setValue={(name) => {
-                    onChangeData({
-                        ...data,
-                        "name" : name
-                    })
-                }}
+                value={fullName}
+                onChangeText={setFullName}
               />
 
               <CustomInput
                 placeholder="Email"
-                value={data.email}
-                setValue={(email) => {
-                    onChangeData({
-                        ...data,
-                        "email" : email
-                    })
-                }}
+                value={email}
+                onChangeText={setEmail}
               />
 
               <CustomInput
                 placeholder="Password"
-                value={data.password}
                 secureTextEntry={true}
-                setValue={(password) => {
-                    onChangeData({
-                        ...data,
-                        "password" : password
-                    })
-                }}
-              />
-
-              <CustomInput
-                placeholder="Retype Password"
-                value={data.re_password}
-                secureTextEntry={true}
-                setValue={(re_password) => {
-                    onChangeData({
-                        ...data,
-                        "re_password" : re_password
-                    })
-                }}
+                value={password}
+                onChangeText={setPassword}
               />
 
               <CustomButton
                 text="Register"
-                onPress={() => {
-                  navigation.navigate('Root');
-                }}
+                onPress={handleRegister}
               />
                 
             </View>
@@ -119,31 +91,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingBottom: 5,
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 10,
-    paddingTop: 5,
-    paddingLeft: 25,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    marginRight: 10,
-  },
-  checked: {
-    backgroundColor: 'black',
-    color: 'white'
-  },
-  text: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: '400',
-    color: 'white',
-    textAlign: 'left',
-    paddingRight: 25,
-  }
 });
