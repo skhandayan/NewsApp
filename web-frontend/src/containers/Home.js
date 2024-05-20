@@ -10,7 +10,7 @@ const API_KEY = 'd0b69496c18e463f888a273cb521ea9f';
 function Home() {
     const [articles, setArticles] = useState([]);
     const [country, setCountry] = useState('');
-    const [loading, setLoading] = useState(false); // State for tracking loading
+    const [loading, setLoading] = useState(false); 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -19,14 +19,14 @@ function Home() {
 
     const handleSubmitCountry = async (e) => {
         e.preventDefault();
-        setLoading(true); // Set loading to true when search button is clicked
+        setLoading(true); 
         try {
             const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${API_KEY}`);
             setArticles(response.data.articles);
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false); // Set loading to false when data fetching is complete
+            setLoading(false); 
         }
     };
 
@@ -39,25 +39,22 @@ function Home() {
 
     const handlePostNews = async () => {
         try {
-            // Make a POST request to your backend API to save the news data
-            await axios.post('your_backend_api_url/news', formData); // Adjust the endpoint as per your backend setup
+            await axios.post('your_backend_api_url/news', formData);
             console.log('News posted successfully:', formData);
-            // Optionally, you can fetch updated timeline data after posting the news
-            // FetchTimelineData();
         } catch (error) {
             console.error('Error posting news:', error);
         }
     };
 
     const fetchData = async (selectedCategory) => {
-        setLoading(true); // Set loading to true when category button is clicked
+        setLoading(true); 
         try {
             const response = await axios.get(`https://newsapi.org/v2/top-headlines?category=${selectedCategory}&apiKey=${API_KEY}`);
             setArticles(response.data.articles);
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false); // Set loading to false when data fetching is complete
+            setLoading(false); 
         }
     };
 

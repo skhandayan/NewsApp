@@ -60,7 +60,7 @@ const SearchScreen = () => {
 
                     <ScrollView>
 
-                        {loading && <Text>Loading...</Text>}
+                        {loading && <Text style={{ color: 'white' }}>Loading...</Text>}
 
                         {/* Articles */}
                         {articles.map((article, index) => (

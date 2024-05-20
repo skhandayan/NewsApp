@@ -32,11 +32,9 @@ export default function LoginScreen() {
             if (error) {
                 Alert.alert("Login Error", error.message);
             } else {
-                console.log('Supabase signIn response:', data); // Log the response data to inspect it
+                console.log('Supabase signIn response:', data); 
                 Alert.alert("Login Successful", "Welcome back!");
-                // Store user data in AsyncStorage
-                await storeUserData(data.user); // Ensure we are storing the correct user object
-                // Navigate to the Root screen
+                await storeUserData(data.user); 
                 navigation.navigate('Root');
             }
         } catch (error) {
