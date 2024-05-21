@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { supabase } from '../client';
-import LOGO from '../assets/LOGO.gif';
-import BACKGROUND from '../assets/BACKGROUND.jpg';
 
 function Registration() {
     const [fullname, setFullname] = useState('');
@@ -129,7 +127,6 @@ const styles = {
     width: '250px',
     padding: '15px',
     margin: '10px 0',
-    fontSize: '1rem',
     backgroundColor: '#ECECEC',
     border: 'none',
     fontWeight: 'bold',

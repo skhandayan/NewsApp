@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { supabase } from '../client';
 import { Link, useNavigate } from 'react-router-dom';
-import LOGO from '../assets/LOGO.gif';
 import BACKGROUND from '../assets/BACKGROUND.jpg';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+
+    
     const navigate = useNavigate();
   
     const handleLogin = async (event) => {
@@ -23,7 +24,7 @@ function Login() {
         }
         // Save user data securely
         localStorage.setItem('user', JSON.stringify(user)); // Assuming user object contains necessary information
-        
+        localStorage.setItem('email', email); // Save user's email
         // Login successful, handle further actions if needed
         navigate('/home'); // Redirect to dashboard or any other page
       } catch (error) {
@@ -143,7 +144,6 @@ const styles = {
     width: '250px',
     padding: '15px',
     margin: '10px 0',
-    fontSize: '1rem',
     backgroundColor: '#ECECEC',
     border: 'none',
     fontWeight: 'bold',

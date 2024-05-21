@@ -6,10 +6,7 @@ import profile from '../assets/profile.png';
 const Profile = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("Logout clicked");
-  };
+  const userEmail = localStorage.getItem('email');
 
   const handleGoBack = () => {
     // Navigate back to the homepage
@@ -29,14 +26,11 @@ const Profile = () => {
       <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '120px' }}>
         <img src={profile} alt="FusionTech Logo" style={{ width: '150px', height: '150px', marginRight: '20px' }} />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '120px', color: 'white', fontWeight: 'bold' }}>You are logged in as: </div>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '120px', color: 'white', fontWeight: 'bold' }}>You are logged in as: {userEmail}</div>
 
       <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
         <button style={styles.buttonStyle} onClick={handleGoBack}>Home</button>
     </div>
-    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '1px' }}>
-        <button style={styles.buttonStyle} onClick={handleLogout} >Log out</button>
-      </div>
 
 
     </div>

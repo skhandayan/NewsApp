@@ -78,7 +78,7 @@ const HomeScreen = () => {
 
                         <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 20, paddingLeft: 25 }}>Welcome to</Text>
 
-                        <View style={{ alignItems: 'center', paddingBottom: 25,}}>
+                        <View style={{ alignItems: 'center',}}>
                             <Text style={{ color: 'white', fontSize: 18 }}>
                                 <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 35 }}>FusionTech</Text> news and media
                             </Text>
@@ -86,8 +86,8 @@ const HomeScreen = () => {
 
                         
                         {/* News Form */}
-                        <View style={{ marginTop: 20 }}>
-                            <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 25,}}>Post News</Text>
+                        <View>
+                            {/* <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 25,}}>Post News</Text>
                             <TextInput 
                                 style={{ paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: 'white', color: 'white' }}
                                 placeholder="Description" 
@@ -108,7 +108,7 @@ const HomeScreen = () => {
                                   onPress={handlePostNews} 
                                   color="black"
                               />
-                          </View>
+                          </View> */}
 
                           <View style={{ marginTop: 20, paddingBottom: 25 }}>
                               <Text style={{ fontWeight: '700', color: 'white', fontSize: 20, paddingBottom: 10, paddingTop: 20 }}>Categories</Text>
