@@ -22,6 +22,8 @@ function Home() {
         description: '',
         photo: ''
     });
+    const [likes, setLikes] = useState({});
+    const [comments, setComments] = useState({});
 
 
     useEffect(() =>{
@@ -132,23 +134,45 @@ function Home() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setNews([...news, response.data]);
+            const newPost = response.data;
+            setNews([...news, newPost]);
             setFormData({ title: '', description: '', photo: null });
+            // Initialize likes and comments for the new post
+            setLikes({ ...likes, [newPost.id]: 0 });
+            setComments({ ...comments, [newPost.id]: [] });
         } catch (error) {
             console.error("Error posting news:", error);
             setErrors(error.message);
         }
     };
 
-
     const deleteNews = async (id) => {
         try {
-            await axios.delete(`http://127.0.0.1:8000/todos/${id}`); // Adjust the URL according to your backend API
-            // After successfully deleting news, fetch the updated list of news
-            const response = await axios.get("http://127.0.0.1:8000/todos");
-            setNews(response.data); // Update the list of news
+            await axios.delete(`http://127.0.0.1:8000/todos/${id}`);
+            const updatedNews = news.filter(item => item.id !== id);
+            setNews(updatedNews);
+            // Remove likes and comments for the deleted post
+            const updatedLikes = { ...likes };
+            delete updatedLikes[id];
+            setLikes(updatedLikes);
+            const updatedComments = { ...comments };
+            delete updatedComments[id];
+            setComments(updatedComments);
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const handleLike = (id) => {
+        setLikes({ ...likes, [id]: likes[id] + 1 });
+    };
+
+    const handleCommentSubmit = (e, id) => {
+        e.preventDefault();
+        const comment = e.target.comment.value;
+        if (comment) {
+            setComments({ ...comments, [id]: [...comments[id], comment] });
+            e.target.comment.value = '';
         }
     };
 
@@ -211,19 +235,34 @@ function Home() {
     <h2>Your posted news</h2>
     <hr />
     <br />
-        {news.map((item, index) => (
-                <div className="card rounded shadow-lg mb-3" key={index}>
-                {item.photo && <img src={`http://127.0.0.1:8000${item.photo}`} className="card-img-top" alt="News" style={{ width: '100%', height: '200px' }} />}
-
-                    <div className="card-body">
-                        <h5 className="card-title">{item.title}</h5>
-                        <p className="card-text">{item.description}</p>
-                        <hr />
-                        <p className="card-text">Posted by: {userEmail}</p>
-                        <button className="btn btn-danger mt-2" onClick={() => deleteNews(item.id)}>Delete</button>
-                    </div>
-                </div>
-            ))}
+    {news.map((item) => (
+                            <div className="card rounded shadow-lg mb-3" key={item.id} >
+                                {item.photo && <img src={`http://127.0.0.1:8000${item.photo}`} className="card-img-top" alt="News" style={{ width: '100%', height: '200px' }} />}
+                                <div className="card-body">
+                                    <h5 className="card-title">{item.title}</h5>
+                                    <p className="card-text">{item.description}</p>
+                                    <hr />
+                                    <p className="card-text">Posted by: {userEmail}</p>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <button className="btn btn-primary" onClick={() => handleLike(item.id)}>Like ({likes[item.id] || 0})</button>
+                                        <button className="btn btn-danger mt-2" onClick={() => deleteNews(item.id)} style={{ marginLeft: '10px' }}>Delete</button>
+                                    </div>
+                                    <form onSubmit={(e) => handleCommentSubmit(e, item.id)} style={{ marginTop: '10px' }}>
+                                        <div className="input-group">
+                                            <input type="text" name="comment" className="form-control" placeholder="Add a comment..." />
+                                            <div className="input-group-append">
+                                                <button className="btn btn-dark" type="submit">Comment</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <ul className="list-group mt-2">
+                                        {(comments[item.id] || []).map((comment, index) => (
+                                            <li key={index} className="list-group-item">{userEmail}:  {comment}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        ))}
 
         <div>
         <div >
@@ -306,16 +345,9 @@ function Home() {
                                 </div>
                             </div>
                         ))}
-                    </div>
-
-        
+                    </div>   
     </div>
 </div>
-
-                <div className="row mt-4">
-                   
-                    
-                </div>
             </div>
         </div>
     );
@@ -339,18 +371,35 @@ const styles = {
     dropdownMenu: {
         position: 'absolute',
         top: '100%',
-        right: 0,
-        backgroundColor: '#fff',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-        zIndex: 1,
+        left: '0',
+        zIndex: '1000',
+        display: 'block',
+        float: 'left',
+        minWidth: '10rem',
+        padding: '0.5rem 0',
+        margin: '0.125rem 0 0',
+        fontSize: '1rem',
+        color: '#212529',
+        textAlign: 'left',
+        listStyle: 'none',
+        backgroundColor: 'black',
+        backgroundClip: 'padding-box',
+        border: '1px solid rgba(0, 0, 0, 0.15)',
+        borderRadius: '0'
     },
     dropdownItem: {
         display: 'block',
-        padding: '8px 12px',
-        textDecoration: 'none',
-        color: '#333',
+        width: '100%',
+        padding: '10px 20px',
+        clear: 'both',
+        fontWeight: 'bold',
+        color: 'white',
+        backgroundColor: 'black',
+        textAlign: 'inherit',
+        whiteSpace: 'nowrap',
+        border: 'none',
+        borderRadius: '0',
+        textDecoration: 'none'
     },
   };
 

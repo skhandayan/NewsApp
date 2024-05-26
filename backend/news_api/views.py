@@ -4,6 +4,11 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import news
 from .serializers import newsSerializer
+from django.shortcuts import redirect
+
+def home(request):
+    return redirect('/todos')
+
 
 @api_view(["GET", "POST"])
 def news_list(request):
