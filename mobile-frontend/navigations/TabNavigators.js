@@ -17,7 +17,7 @@ const TabNavigator = () => {
                 return <Icon name="home" size={20} color={focused ? 'grey' : 'white'} />;
             case 'Search':
                 return <Icon name="search" size={20} color={focused ? 'grey' : 'white'} />;
-            case 'Profile':
+            case 'About Us':
                 return <Icon name="user" size={20} color={focused ? 'grey' : 'white'} />;
             default:
                 return null;
@@ -50,7 +50,7 @@ const TabNavigator = () => {
                 options={{ headerShown: false }} 
             />
             <Tab.Screen 
-                name="Profile" 
+                name="About Us" 
                 component={ProfileScreen} 
                 options={{ headerShown: false }} 
             />

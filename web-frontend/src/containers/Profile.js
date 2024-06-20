@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useHistory hook if you're using react-router
 import backgroundImage from '../assets/BACKGROUND.jpg';
 import profile from '../assets/profile.png';
@@ -12,6 +12,10 @@ const Profile = () => {
     // Navigate back to the homepage
     navigate('/home');
   };
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  const authors = ['Sean Kirk Handayan', 'Jerald Timbang', 'Metchlyr Balasabas', 'Kyle Langomes'];
 
   return (
     <div className="container4" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh', height: '100%', width: '100%', backgroundAttachment: 'fixed' }}>
@@ -31,6 +35,8 @@ const Profile = () => {
       <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
         <button style={styles.buttonStyle} onClick={handleGoBack}>Home</button>
     </div>
+
+   
 
 
     </div>

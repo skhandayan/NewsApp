@@ -7,8 +7,6 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-
-    
     const navigate = useNavigate();
   
     const handleLogin = async (event) => {
@@ -23,12 +21,13 @@ function Login() {
           return;
         }
         // Save user data securely
-        localStorage.setItem('user', JSON.stringify(user)); // Assuming user object contains necessary information
+        localStorage.setItem('user', JSON.stringify(user)); // Save user object
         localStorage.setItem('email', email); // Save user's email
         // Login successful, handle further actions if needed
         navigate('/home'); // Redirect to dashboard or any other page
       } catch (error) {
-        setError(error.message);
+        console.error('Error signing in:', error);
+        setError('Failed to sign in. Please check your credentials and try again.');
       }
     };
   
@@ -115,26 +114,6 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  logoSectionStyle: {
-    flex: 1,
-    width: 'auto',
-    height: 'auto',
-    backgroundImage: `url(${BACKGROUND})`,
-    backgroundSize: '100% 100%', 
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '10px',
-  },
-  logoStyle: {
-    textAlign: 'center',
-  },
-  logoImageStyle: {
-    width: '250px', // Adjust the size as needed
-    height: 'auto',
-    marginBottom: '10px',
-  },
   titleStyle: {
     fontSize: '2.5rem',
     textAlign: 'center',
@@ -150,7 +129,6 @@ const styles = {
     fontSize: '13px',
     borderRadius: '5px'
   },
-
   buttonStyle: {
     marginTop: '30px',
     padding: '15px',
@@ -174,10 +152,6 @@ const styles = {
     color: 'black',
     textDecoration: 'none',
     marginLeft: '5px',
-  },
-  checkboxContainer: {
-    display: 'flex',
-    alignItems: 'center',
   },
 };
 

@@ -187,6 +187,7 @@ function Home() {
                 </h1>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span style={{ marginRight: '20px' }}>Welcome, {userEmail}</span>
+                    <a href="/authors">About Us</a>
                     <a href="/profile">
                         <img src={profile} alt="FusionTech Logo" style={{ width: '70px', height: '70px', marginRight: '20px' }} />
                     </a>
